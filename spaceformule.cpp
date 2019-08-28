@@ -20,12 +20,12 @@ double SiderialTime(int year, int month, int day, int hour, int minute, int seco
 
 TVector intoGSK(TVector R)
 {
-     long double RE=6371.3;
-     TVector X(3);
-     X[0]=(RE+R[2])*cos(R[1])*cos(R[0]);
-     X[1]=(RE+R[2])*cos(R[1])*sin(R[0]);
-     X[2]=(RE+R[2])*sin(R[1]);
-     return X;
+     long double RE=6371.3L;
+     TVector r(3);
+     r[0] = RE*cos(R[1])*cos(R[0]);
+     r[1] = RE*cos(R[1])*sin(R[0]);
+     r[2] = RE*sin(R[1]);
+     return r;
 }
 
 TMatrix intoA(double Fi,double S)
@@ -36,7 +36,7 @@ TMatrix intoA(double Fi,double S)
     A(0,2)=cos(Fi);
     A(1,0)=cos(Fi)*cos(S);
     A(1,1)=cos(Fi)*sin(S);
-    A(1,2)=-sin(S);
+    A(1,2)=-sin(Fi);//?Fi
     A(2,0)=-sin(S);
     A(2,1)=cos(S);
     A(2,2)=0;

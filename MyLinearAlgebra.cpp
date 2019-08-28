@@ -158,6 +158,7 @@ for (int i=0;i<n;i++)
 	b+=data[i]*a[i];
 }
 return b;
+
 }
 
 TVector TVector::operator*(const TMatrix& a) const
@@ -165,18 +166,16 @@ TVector TVector::operator*(const TMatrix& a) const
 #ifdef _DEBUG
 	if(n!=a.n) throw 1;
 #endif
-TVector V(a.GetColCount());
-long double b=0;
-		for(int j=0;j<a.GetColCount();j++)
-		   {
-			 for(int i=0; i<n;i++)
-			 {
-				 b+=a(i,j)*data[i];
-				 V[j]=b;
-			 }
-            b=0;
-		   }
-return V;
+    TVector V(n);
+
+    for (int i = 0; i < n; i++)
+    {
+        V[i] = 0;
+        for (int j = 0; j < a.GetColCount(); j++)
+            V[i] += a(i,j) * data[j];
+    }
+
+    return V;
 }
 
 TVector TVector::operator ^ (const TVector& a) const
@@ -194,7 +193,7 @@ TVector TVector::operator ^ (const TVector& a) const
 
 long double TVector::length() const noexcept
 {
-	double b=0;
+           double b=0;
 			for(int i=0;i<n;i++)
 	        {
 	       	 b+=data[i]*data[i];
@@ -482,17 +481,15 @@ TVector TMatrix::operator * (const TVector& arg) const
 if ((n != arg.n))
 throw 1;
 #endif
-TVector V(GetColCount());
-long double b=0;
-		for(int j=0;j<GetColCount();j++)
-		   {
-			 for(int i=0; i<GetRowCount();i++)
-			 {
-				 b+=data[i][j]*arg[i];
-				 V[j]=b;
-			 }
-            b=0;
-		   }
+TVector V(n);
+
+for (int i = 0; i < n; i++)
+{
+    V[i] = 0;
+    for (int j = 0; j < m; j++)
+        V[i] += data[i][j] * arg[j];
+}
+
 return V;
 		}
 
